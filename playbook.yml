@@ -5,13 +5,7 @@
 - hosts: localhost
   vars_files:
     - "vars/config.yml"
-- name: Get EC2 instance facts
-  ec2_instance_facts:
-  aws_access_key: "{{ aws_access_key }}"
-  aws_secret_key: "{{ aws_secret_key }}"
-  filters:
-  tag:Name: "Leo"
-  register: ec2_facts
+
   
 #  ################   
 #   tasks:
