@@ -5,6 +5,8 @@
 - hosts: localhost
   vars_files:
     - "vars/config.yml"
+- name: Gather ec2 facts
+  ec2_metadata_facts:
 #  ################   
 #   tasks:
 #     - include: tasks/vpc.yml
