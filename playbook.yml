@@ -6,7 +6,8 @@
   vars_files:
     - "vars/config.yml"
 - name: Gather ec2 facts
-  ec2_metadata_facts:
+  ec2_instance_facts:
+  
 #  ################   
 #   tasks:
 #     - include: tasks/vpc.yml
