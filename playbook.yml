@@ -3,7 +3,7 @@
 # Create Stack #
 ################
 - hosts: localhost
-  gather_facts: no
+  gather_facts: yes
   vars_files:
     - "vars/config.yml"
 
