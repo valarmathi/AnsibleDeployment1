@@ -8,9 +8,9 @@
     - "vars/config.yml"
 
   
-#  ################   
-#   tasks:
-      - include: tasks/vpc.yml
-      - include: tasks/ec2_key.yml
-      - include: tasks/stack.yml
+#################   
+  tasks:
+    - include: tasks/vpc.yml
+    - include: tasks/ec2_key.yml
+    - include: tasks/stack.yml
 
