@@ -18,8 +18,8 @@
         vpc_subnet_id: "{{subnet_id}}"
         network:
           assign_public_ip: yes
-        wait: yes
-        wait_timeout: 500
+        #wait: yes
+        #wait_timeout: 500
         tags:
           name: appservers
           os: ubuntu
