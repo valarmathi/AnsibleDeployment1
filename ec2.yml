@@ -1,0 +1,63 @@
+---
+- name: Create Ec2 instances
+  hosts: localhost
+  connection: local
+  vars:
+    region: us-east-1
+  tasks:
+    - name: create vm
+      ec2_instance:
+        name: stack001-vm
+        aws_secret_key: "{{secret_key}}"
+        aws_access_key: "{{access_key}}"
+        instance_type: t2.micro
+        image_id: "{{image_id}}"
+        state: present
+        region: "{{region}}"
+        key_name: "{{key}}"
+        vpc_subnet_id: "{{subnet_id}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 500
+        tags:
+          name: appservers
+          os: ubuntu
+      register: vm
+    - set_fact: host_ip={{ vm["instances"][0]["private_ip_address"] }}
+    - set_fact: host_name={{ vm["instances"][0]["private_ip_address"] }}
+    - debug:
+        var: vm
+    - name: add hosts
+      add_host:
+        name: "{{host_ip}}"
+        groups: created_nodes
+        ansible_user: "ubuntu"
+        ansible_connection: "ssh"
+        ansible_ssh_private_key_file: /home/ruty/ansible-key.pem
+- hosts: created_nodes
+  become: yes 
+  gather_facts: no
+  remote_user: ubuntu
+  vars:
+    http_port: 80
+  tasks:
+    - name: Wait for SSH banners
+      wait_for_connection:
+        delay: 5
+        timeout: 3000
+
+    - name: Check Update
+      apt:
+        update_cache: yes
+
+    - apt: name=apache2 update_cache=yes state=present
+
+    - debug: var=ansible_facts
+
+    - name: Gather facts for first time
+      ansible.builtin.setup:
+
+    - name: put debug log
+      debug:
+        var: ansible_facts
