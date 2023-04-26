@@ -55,9 +55,6 @@
 
     - debug: var=ansible_facts
 
-    - name: Gather facts for first time
-      ansible.builtin.setup:
-
     - name: put debug log
       debug:
         var: ansible_facts
